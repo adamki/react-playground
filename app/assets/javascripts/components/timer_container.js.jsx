@@ -16,8 +16,10 @@ var TimerContainer = React.createClass({
   },
   render: function(){
     var elapsed = Math.round(this.state.elapsed / 100);
-
     var seconds = (elapsed / 10).toFixed(1);
+    var style = {
+      color: 'teal'
+    };
 
     return(
       <div>
@@ -29,7 +31,7 @@ var TimerContainer = React.createClass({
             <p>This is a Timer Component. It re-renders every 50ms and compares the actual DOM to the virtual DOM and updates dynamicurry</p>
           </div>
         </div>
-        <p>This example was started <b>{seconds} seconds</b> ago.</p>
+        <h3 className="ui header">This Timer was started <strong style={style}>{seconds} seconds</strong> ago.</h3>
       </div>
     );
   }
