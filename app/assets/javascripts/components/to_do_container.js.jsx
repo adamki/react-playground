@@ -5,9 +5,14 @@ var ToDoContainer = React.createClass({
       listItems: []
     };
   },
-  addItem: function(){
-    console.log("Add a new item");
+  handleNewItem: function(title, description){
+    var item = {title: title, body: description}
+    var that = this.state.listItems;
+    this.setState({
+      listItems: that.concat(item)
+    });
   },
+
   render: function(){
     return(
       <div>
@@ -22,34 +27,48 @@ var ToDoContainer = React.createClass({
 
         <br/>
         <br/>
-        <NewIdeaForm ideas={this.state.listItems}/>
+        <NewItemForm items={this.state.listItems} newItem={this.handleNewItem}/>
         <br/>
         <br/>
-        <ItemList ideas={this.state.listItems}/>
+        <ItemList items={this.state.listItems}/>
       </div>
     );
   }
 });
 
 
-var NewIdeaForm = React.createClass({
+var NewItemForm = React.createClass({
+  getInitialState: function(){ return{
+      titleDefault: "Title",
+      bodyDefault: "Description"
+    }
+  },
   addItem: function(e){
     e.preventDefault();
-    console.log(ReactDOM.findDOMNode(this.refs.title).value.trim());
-    console.log(ReactDOM.findDOMNode(this.refs.description).value.trim());
+    var title       = ReactDOM.findDOMNode(this.refs.title).value.trim();
+    var description = ReactDOM.findDOMNode(this.refs.description).value.trim();
+
+    if(!title || !description){
+      return;
+    }
+
+    this.props.newItem(title, description);
+
+    ReactDOM.findDOMNode(this.refs.title).value = ""
+    ReactDOM.findDOMNode(this.refs.description).value = ""
   },
   render: function(){
     return(
-      <form className="ui form center aligned column stackable center page grid">
+      <form className="ui form center aligned column stackable center page grid" onSubmit={this.addItem}>
         <div className="field">
           <label>Title</label>
-          <input type="text" name="title" placeholder="title" ref="title" />
+          <input type="text" name="title" val="Title" placeholder="Title" ref="title" />
         </div>
         <div className="eight wide field">
           <label>Description</label>
-          <input type="text" name="description" placeholder="description" ref="description" />
+          <input type="text" name="description" val="Description" placeholder="Description" ref="description" />
         </div>
-        <button onClick={this.addItem} className="ui button inline">Add Item</button>
+        <input type="submit" value="Post" className="ui button"/>
       </form>
     );
   }
@@ -57,15 +76,20 @@ var NewIdeaForm = React.createClass({
 
 var ItemList = React.createClass({
   render: function(){
-    return(
-      <div className="ui relaxed divided list">
-        <div className="item">
+    var item = this.props.items.map(function(item, index){
+      return(
+        <div className="item" key={index}>
           <i className="large github middle aligned icon"></i>
           <div className="content">
-            <a className="header">Item ONE</a>
-            <div className="description">Updated 10 mins ago</div>
+            <a className="header">{item.title}</a>
+            <div className="description">{item.body}</div>
           </div>
         </div>
+      )
+    }.bind(this));
+    return(
+      <div className="ui relaxed divided list">
+        {item}
       </div>
     );
   }
