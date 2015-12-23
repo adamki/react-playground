@@ -21,7 +21,7 @@ var ToDoContainer = React.createClass({
         <br/>
         <div className="ui message">
           <div className="header">
-            <p>This is the To-Do list component. It shows dynamic CRUD functionality in React.</p>
+            <p>This is the To-Do list component. It shows dynamic CRUD functionality in React. This entire List is built CLient-Side and does not save upon refresh.</p>
           </div>
         </div>
 
@@ -78,17 +78,24 @@ var ItemList = React.createClass({
   render: function(){
     var item = this.props.items.map(function(item, index){
       return(
-        <div className="item" key={index}>
-          <i className="large github middle aligned icon"></i>
-          <div className="content">
-            <a className="header">{item.title}</a>
-            <div className="description">{item.body}</div>
+        <div className="ui relaxed divided list three column grid">
+          <div className="column three wide "></div>
+          <div className="item column ten wide" key={index}>
+            <div className="content left floated">
+              <h3 className="header">Title: {item.title}</h3>
+              <div className="description">Description: {item.body}</div>
+            </div>
+
+            <div className="right floated content">
+              <i className="large write middle aligned icon"></i>
+              <i className="large remove selection emiddle aligned icon"></i>
+            </div>
           </div>
         </div>
       )
     }.bind(this));
     return(
-      <div className="ui relaxed divided list">
+      <div>
         {item}
       </div>
     );
