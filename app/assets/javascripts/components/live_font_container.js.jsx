@@ -38,7 +38,7 @@ var LiveFontContainer = React.createClass({
           <tbody>
             <Output font = "Helvetica Neue" val={this.state.text}></Output>
             <Output font = "Proxima Nova" val={this.state.text}></Output>
-    				<Output font = "Bree serif" val={this.state.text}></Output>
+    				<Output font = "Comic Sans MS" val={this.state.text}></Output>
     				<Output font = "Lato" val={this.state.text}></Output>
     				<Output font = "Cabin" val={this.state.text}></Output>
     				<Output font = "Andale Mono"val={this.state.text}></Output>
@@ -50,7 +50,7 @@ var LiveFontContainer = React.createClass({
 });
 
 var InputField = React.createClass({
-  update: function (e){
+  update: function (e){ 
     this.props.onChange(e);
   },
   render: function(){

@@ -14,6 +14,11 @@ var ReactNavbarContainer = React.createClass({
       whichComp: "todo"
     });
   },
+  showTimerContainer: function(){
+    this.setState({
+      whichComp: "timer"
+    });
+  },
   render: function(){
     return(
       <div>
@@ -28,8 +33,11 @@ var ReactNavbarContainer = React.createClass({
         <br/>
         <button onClick={this.showLiveFontContainer} className="ui button">Preview Live Fonts</button>
         <button onClick={this.showToDoList} className="ui button">ToDo List</button>
+        <button onClick={this.showTimerContainer} className="ui button">React Timer</button>
+
         { this.state.whichComp === "font" ? <LiveFontContainer/> : null }
         { this.state.whichComp === "todo" ? <ToDoContainer/> : null }
+        { this.state.whichComp === "timer" ? <TimerContainer/> : null }
       </div>
     );
   }
