@@ -28,7 +28,7 @@ var ToDoContainer = React.createClass({
         <br/>
         <div className="ui message">
           <div className="header">
-            <p>This is the To-Do list component. It shows dynamic CRUD functionality in React. This entire List is built CLient-Side and does not save upon refresh.</p>
+            <p>This is the To-Do list component. It shows dynamic Create/Delete functionality in React. This entire List is built Client-Side and does not save upon refresh.</p>
           </div>
         </div>
 
@@ -37,7 +37,7 @@ var ToDoContainer = React.createClass({
         <NewItemForm items={this.state.listItems} newItem={this.handleNewItem}/>
         <br/>
         <br/>
-        <ItemList items={this.state.listItems} onRemove={this.removeItem}/>
+        <ItemList items={this.state.listItems} onEdit={this.editItem} onRemove={this.removeItem}/>
       </div>
     );
   }
@@ -100,7 +100,6 @@ var ItemList = React.createClass({
             </div>
 
             <div className="right floated content">
-              <i className="large write middle aligned icon"></i>
               <a onClick={this.handleDelete(item)}><i className="large remove selection emiddle aligned icon" ></i></a>
             </div>
           </div>
