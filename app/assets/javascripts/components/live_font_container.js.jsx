@@ -59,7 +59,6 @@ var InputField = React.createClass({
       <form className="ui form center aligned column stackable center page grid">
         <div className="eight wide field inline">
           <input type="text" placeholder="Let's get Started" onChange={this.update}/>
-          <button className="ui button">Clear</button>
         </div>
         <br/>
       </form>
