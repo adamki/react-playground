@@ -6,13 +6,20 @@ var ToDoContainer = React.createClass({
     };
   },
   handleNewItem: function(title, description){
-    var item = {title: title, body: description}
+    var item = {title: title, body: description};
     var that = this.state.listItems;
     this.setState({
       listItems: that.concat(item)
     });
   },
-
+  removeItem: function(item){
+    var filteredItemList = this.state.listItems.filter(function(itm){
+      return item.id !== itm.id;
+    });
+    this.setState({
+      listItems: filteredItemList
+    });
+  },
   render: function(){
     return(
       <div>
@@ -30,7 +37,7 @@ var ToDoContainer = React.createClass({
         <NewItemForm items={this.state.listItems} newItem={this.handleNewItem}/>
         <br/>
         <br/>
-        <ItemList items={this.state.listItems}/>
+        <ItemList items={this.state.listItems} onRemove={this.removeItem}/>
       </div>
     );
   }
@@ -41,7 +48,7 @@ var NewItemForm = React.createClass({
   getInitialState: function(){ return{
       titleDefault: "Title",
       bodyDefault: "Description"
-    }
+    };
   },
   addItem: function(e){
     e.preventDefault();
@@ -54,8 +61,8 @@ var NewItemForm = React.createClass({
 
     this.props.newItem(title, description);
 
-    ReactDOM.findDOMNode(this.refs.title).value = ""
-    ReactDOM.findDOMNode(this.refs.description).value = ""
+    ReactDOM.findDOMNode(this.refs.title).value = "";
+    ReactDOM.findDOMNode(this.refs.description).value = "";
   },
   render: function(){
     return(
@@ -75,12 +82,18 @@ var NewItemForm = React.createClass({
 });
 
 var ItemList = React.createClass({
+  handleDelete: function(item) {
+    return function(e) {
+      e.preventDefault();
+      return this.props.onRemove(item);
+    }.bind(this);
+  },
   render: function(){
     var item = this.props.items.map(function(item, index){
       return(
-        <div className="ui relaxed divided list three column grid">
+        <div className="ui relaxed divided list three column grid" key={index}>
           <div className="column three wide "></div>
-          <div className="item column ten wide" key={index}>
+          <div className="item column ten wide">
             <div className="content left floated">
               <h3 className="header">Title: {item.title}</h3>
               <div className="description">Description: {item.body}</div>
@@ -88,11 +101,11 @@ var ItemList = React.createClass({
 
             <div className="right floated content">
               <i className="large write middle aligned icon"></i>
-              <i className="large remove selection emiddle aligned icon"></i>
+              <a onClick={this.handleDelete(item)}><i className="large remove selection emiddle aligned icon" ></i></a>
             </div>
           </div>
         </div>
-      )
+      );
     }.bind(this));
     return(
       <div>
